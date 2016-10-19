@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import org.javafx.controls.customs.ComboBoxAutoComplete?>
+
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<center>
+		<BorderPane BorderPane.alignment="CENTER">
+			<top>
+				<VBox fx:id="vBoxMsg" BorderPane.alignment="CENTER" />
+			</top>
+         <center>
+            <VBox prefHeight="324.0" prefWidth="1096.0" BorderPane.alignment="CENTER">
+               <children>
+      				<GridPane hgap="5" vgap="5">
+      					<padding>
+      						<Insets bottom="10" left="25" right="25" top="25" />
+      					</padding>
+      					<children>
+      						<Label text="Venta.panel.field.idventa" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      						<TextField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      						<Label text="Venta.panel.field.fecha" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      						<DatePicker fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      						<Label text="Venta.panel.field.fechaPago" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      						<Label text="Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+      						<TextField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+      						<ComboBoxAutoComplete fx:id="cbxAgregarProducto" text="esto esta buenisimo..." GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      					</children>                     			
+      				</GridPane>                 
+               </children>
+            </VBox>
+         </center>
+		</BorderPane>
+	</center>
+</fx:root>
