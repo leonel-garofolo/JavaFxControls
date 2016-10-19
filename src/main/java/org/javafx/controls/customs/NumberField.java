@@ -27,4 +27,16 @@ public class NumberField extends TextField {
 	public void setMaxValue(int maxValue) {
 		this.maxValue = maxValue;
 	}
+	
+	public int getValue() {		
+		return Integer.valueOf(this.getText());
+	}
+
+	public void setValue(int value) {
+		this.setText(String.valueOf(value));
+	}
+	
+	public void setValue(String value) {		
+		this.setText(value);
+	}
 }

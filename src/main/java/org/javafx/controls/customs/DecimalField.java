@@ -1,6 +1,7 @@
 package org.javafx.controls.customs;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -41,5 +42,17 @@ public class DecimalField extends TextField {
 
 	public void setMaxValue(int maxValue) {
 		this.maxValue = maxValue;
+	}
+
+	public BigDecimal getValue() {		
+		return new BigDecimal(this.getText());
+	}
+
+	public void setValue(BigDecimal value) {
+		this.setText(value.toString());
+	}
+	
+	public void setValue(String value) {		
+		this.setText(value);
 	}
 }
