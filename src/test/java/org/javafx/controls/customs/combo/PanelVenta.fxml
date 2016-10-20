@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import org.javafx.controls.customs.ComboBoxAutoComplete?>
+<?import org.javafx.controls.customs.NumberField?>
+<?import org.javafx.controls.customs.DatePickerField?>
+<?import org.javafx.controls.customs.StringField?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
@@ -24,13 +27,15 @@
       					</padding>
       					<children>
       						<Label text="Venta.panel.field.idventa" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-      						<TextField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      						<StringField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       						<Label text="Venta.panel.field.fecha" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      						<DatePicker fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      						<DatePickerField fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       						<Label text="Venta.panel.field.fechaPago" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-      						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      						<DatePickerField fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       						<Label text="Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-      						<TextField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+      						<StringField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+      						<Label text="Number" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      						<NumberField fx:id="txtNumber" maxValue="5" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       						<ComboBoxAutoComplete fx:id="cbxAgregarProducto" text="esto esta buenisimo..." GridPane.columnIndex="0" GridPane.rowIndex="2" />
       					</children>                     			
       				</GridPane>                 

@@ -2,7 +2,7 @@ package org.javafx.controls.customs;
 
 import java.io.IOException;
 
-import javafx.beans.property.StringProperty;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,10 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler<KeyEvent> {
-	private String text;
-	
-	private static String typedText;
-	private static StringBuilder sb = new StringBuilder();
+	private String text;	
 	private ObservableList<T> data;
 	private boolean moveCaretToPos = false;
 	private int caretPos;
@@ -34,12 +31,31 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
         }
         
         this.setEditable(true);
+        this.focusedProperty().addListener((observable, oldValue, newValue) -> {        	
+        	this.getEditor().selectAll();
+        });
+        
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
-				hide();
+				hide();								
 			}
 		});
-		this.addEventHandler(KeyEvent.KEY_RELEASED, this);
+		this.addEventHandler(KeyEvent.KEY_RELEASED, this);	
+		 this.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		        selectTextIfFocused();
+		    });
+	    this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+	        selectTextIfFocused();
+	    });
+		    
+	}
+	
+	private void selectTextIfFocused(){
+	    Platform.runLater(() -> {
+	        if ((this.getEditor().isFocused() || this.isFocused()) && !this.getEditor().getText().isEmpty()) {
+	            this.getEditor().selectAll();
+	        }
+	    });
 	}
 	
 	@FXML
@@ -48,77 +64,52 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	}
 	
 	public void handle(KeyEvent event) {
-		String keyPressed = event.getCode().toString().toLowerCase();
+		if(event.getCode() == KeyCode.UP) {
+            caretPos = -1;
+            moveCaret(this.getEditor().getText().length());
+            return;
+        } else if(event.getCode() == KeyCode.DOWN) {
+            if(!this.isShowing()) {
+                this.show();
+            }
+            caretPos = -1;
+            moveCaret(this.getEditor().getText().length());
+            return;
+        } else if(event.getCode() == KeyCode.BACK_SPACE) {
+        	moveCaretToPos = true;
+            caretPos = this.getEditor().getCaretPosition();
+        } else if(event.getCode() == KeyCode.DELETE) {
+        	moveCaretToPos = true;
+            caretPos = this.getEditor().getCaretPosition();
+        }
 
-		if ("space".equals(keyPressed)) {
-			typedText = " ";
-		} else if ("shift".equals(keyPressed) || "command".equals(keyPressed) || "alt".equals(keyPressed)) {
+        if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
+                || event.isControlDown() || event.getCode() == KeyCode.HOME
+                || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB || event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {
+            return;
+        }
 
-			return;
-		} else {
-			typedText = event.getCode().toString().toLowerCase();
-		}
+        ObservableList<T> list = FXCollections.observableArrayList();
+        if(data != null){
+        	 for (int i=0; i<data.size(); i++) {
+                 if(data.get(i).toString().toLowerCase().contains(
+                    this.getEditor().getText().toLowerCase())) {
+                     list.add(data.get(i));
+                 }
+             }
+        }
+       
+        String t = this.getEditor().getText();
 
-		if (event.getCode() == KeyCode.UP) {
-			caretPos = -1;
-			moveCaret(this.getEditor().getText().length());
-			return;
-		} else if (event.getCode() == KeyCode.DOWN) {
-			if (!this.isShowing()) {
-				this.show();
-			}
-			caretPos = -1;
-			moveCaret(this.getEditor().getText().length());
-			return;
-		} 				
-		else if (event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE) {
-			moveCaretToPos = true;
-			caretPos = this.getEditor().getCaretPosition();					
-		} else if (event.getCode().equals(KeyCode.TAB)) {		
-			typedText = null;
-			sb.delete(0, sb.length());
-			return;
-		} else if (event.getCode() == KeyCode.LEFT || event.isControlDown() || event.getCode() == KeyCode.HOME
-				|| event.getCode() == KeyCode.END || event.getCode() == KeyCode.RIGHT) {
-
-			return;
-		}
-
-		if (typedText == null) {
-			typedText = this.getEditor().getText().toLowerCase();
-			sb.append(typedText);
-
-		} else {
-			System.out.println("sb:" + sb);
-			System.out.println("tt:" + typedText);
-
-			sb.append(typedText);
-
-		}
-
-		ObservableList<T> list = FXCollections.observableArrayList();
-		for (T aData : data) {
-			if(aData.toString().toLowerCase().contains(this.getEditor().getText().toLowerCase())) 
-				list.add(aData);													
-			
-		}
-
-		this.setItems(list);
-		/*
-		if (mode.equals(AutoCompleteMode.STARTS_WITH)){
-			this.getEditor().setText(some);
-			this.getEditor().positionCaret(sb.length());
-			this.getEditor().selectEnd();	
-		}
-		*/
-		
-		if (!moveCaretToPos) {
-			caretPos = -1;
-		}
-
-		if (!list.isEmpty()) {
-			this.show();
-		}
+        this.setItems(list);
+        this.getEditor().setText(t);
+        if(!moveCaretToPos) {
+            caretPos = -1;
+        }
+        moveCaret(t.length());
+        if(!list.isEmpty()) {
+            this.show();
+        }
 		
 	}
 	
@@ -136,9 +127,6 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	}
 
 	public void setText(String text) {
-		this.text = text;
-		System.out.println(text);
+		this.text = text;		
 	}
-	
-	
 }
