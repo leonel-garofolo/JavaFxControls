@@ -1,12 +1,10 @@
 package org.javafx.controls.customs;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
@@ -14,17 +12,7 @@ public class DecimalField extends TextField {
 	private int maxValue = 11;
 	
 	public DecimalField(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();            
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        
-        textProperty().addListener(new ChangeListener<String>() {
+		textProperty().addListener(new ChangeListener<String>() {
 
             private boolean ignore;
 

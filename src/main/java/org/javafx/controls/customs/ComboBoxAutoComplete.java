@@ -1,13 +1,10 @@
 package org.javafx.controls.customs;
 
-import java.io.IOException;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -19,17 +16,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	private int caretPos;
 
 	
-	public ComboBoxAutoComplete(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();            
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        
+	public ComboBoxAutoComplete(){		        
         this.setEditable(true);
         this.focusedProperty().addListener((observable, oldValue, newValue) -> {        	
         	this.getEditor().selectAll();

@@ -1,25 +1,12 @@
 package org.javafx.controls.customs;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 
 public class DatePickerField extends DatePicker {
 
-	public DatePickerField() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();            
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }        
-		
+	public DatePickerField() {		     
        this.setOnAction((ActionEvent e) -> {
 			System.out.println("acciono");
 		    boolean isThisField = false;

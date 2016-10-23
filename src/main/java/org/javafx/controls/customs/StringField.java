@@ -1,11 +1,8 @@
 package org.javafx.controls.customs;
 
-import java.io.IOException;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
@@ -13,16 +10,6 @@ public class StringField extends TextField {
 private int maxValue = 255;
 	
 	public StringField() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();            
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        
 		textProperty().addListener(new ChangeListener<String>() {
 
             private boolean ignore;
