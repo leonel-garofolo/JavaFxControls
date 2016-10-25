@@ -83,8 +83,12 @@ public class DecimalField extends TextField {
 		this.maxValue = maxValue;
 	}
 
-	public BigDecimal getValue() {		
-		return new BigDecimal(this.getText());
+	public BigDecimal getValue() {
+		if(this.getText().equals("")){
+			return null;
+		}else{
+			return new BigDecimal(this.getText());
+		}
 	}
 
 	public void setValue(BigDecimal value) {

@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 
 public class NumberField extends TextField {
 	private int maxValue = 9;
-	
+	//TODO crear parametro de numero de secuencia de foco
 	public NumberField() {		
 		textProperty().addListener(new ChangeListener<String>() {
 
