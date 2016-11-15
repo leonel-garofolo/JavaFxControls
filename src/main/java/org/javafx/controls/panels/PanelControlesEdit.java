@@ -33,7 +33,7 @@ public class PanelControlesEdit extends Pane {
 		Image imageDecline = new Image(getClass().getResourceAsStream("/image/save.png"));
 		btnGuardar.setGraphic(new ImageView(imageDecline));	
 		
-		imageDecline = new Image(getClass().getResourceAsStream("/image/close.png"));
+		imageDecline = new Image(getClass().getResourceAsStream("/image/cancel.png"));
 		btnCancelar.setGraphic(new ImageView(imageDecline));	
 	}
 
