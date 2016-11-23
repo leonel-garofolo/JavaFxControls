@@ -86,7 +86,11 @@ public class NumberField extends TextField {
 		if(this.getText() != null && this.getText().equals("")){
 			return null;
 		}
-		return Integer.valueOf(this.getText());
+		try{
+			return Integer.valueOf(this.getText());
+		}catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 	public void setValue(int value) {

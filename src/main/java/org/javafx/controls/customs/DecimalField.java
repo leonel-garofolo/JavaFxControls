@@ -63,17 +63,17 @@ public class DecimalField extends TextField {
 
 	@Override
 	public void replaceText(int start, int end, String text) {
-		if (text.matches("[0-9-.?]*")) {
+		if (text.matches("[0-9,.]*")) {
 			super.replaceText(start, end, text);
 		}
 	}
 
 	@Override
 	public void replaceSelection(String text) {
-		if (text.matches("[0-9-.?]*")) {
+		if (text.matches("[0-9,.]*")) {
 			super.replaceSelection(text);
 		}
-	}
+	}		
 	
 	public int getMaxValue() {
 		return maxValue;
@@ -87,7 +87,11 @@ public class DecimalField extends TextField {
 		if(this.getText().equals("")){
 			return null;
 		}else{
-			return new BigDecimal(this.getText());
+			try{
+				return new BigDecimal(this.getText());
+			}catch (Exception e) {
+				return null;
+			}
 		}
 	}
 
