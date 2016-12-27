@@ -1,15 +1,22 @@
 package org.javafx.controls.customs;
 
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 public class StringField extends TextField {
-private int maxValue = 255;
+	private int maxValue = 255;	
 	
 	public StringField() {
+		super();
+		initComponents();   
+	}
+	
+	@SuppressWarnings({ "restriction" })
+	private void initComponents() {		
 		textProperty().addListener(new ChangeListener<String>() {
 
             private boolean ignore;
@@ -26,39 +33,13 @@ private int maxValue = 255;
             }
         });
 		
-		this.setOnAction((ActionEvent e) -> {
-		    boolean isThisField = false;
-		    for (Node child : getParent().getChildrenUnmodifiable()) {
-		        if (isThisField) {
+		this.setOnAction((ActionEvent e) -> {	
+			if( this.getSkin() instanceof BehaviorSkinBase<?, ?>) {
+	            ((BehaviorSkinBase<?, ?>) this.getSkin()).getBehavior().traverseNext();  
+	        }			
+		});	
+	}	
 
-		            //This code will only execute after the current Node
-		            if (child.isFocusTraversable() && !child.isDisabled()) {
-		                child.requestFocus();
-
-		                //Reset check to prevent later Node from pulling focus
-		                isThisField = false;
-		            }
-		        } else {
-
-		            //Check if this is the current Node
-		            isThisField = child.equals(this);
-		        }
-		    }
-		  //Check if current Node still has focus
-		    boolean focusChanged = !this.isFocused();
-		    if (!focusChanged) {
-		        for (Node child : this.getParent().getChildrenUnmodifiable()) {
-		            if (!focusChanged && child.isFocusTraversable() && !child.isDisabled()) {
-		                child.requestFocus();
-
-		                //Update to prevent later Node from pulling focus
-		                focusChanged = true;
-		            }
-		        }
-		    }
-		});		    
-	}
-	
 	public int getMaxValue() {
 		return maxValue;
 	}

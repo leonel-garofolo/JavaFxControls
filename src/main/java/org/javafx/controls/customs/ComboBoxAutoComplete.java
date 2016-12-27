@@ -1,8 +1,11 @@
 package org.javafx.controls.customs;
 
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -15,16 +18,26 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	private boolean moveCaretToPos = false;
 	private int caretPos;
 
-	
 	public ComboBoxAutoComplete(){		        
-        this.setEditable(true);
+        super();
+        initComponents();
+	}
+	
+	@SuppressWarnings("restriction")
+	private void initComponents(){
+		this.setEditable(true);
         this.focusedProperty().addListener((observable, oldValue, newValue) -> {        	
         	this.getEditor().selectAll();
         });
         
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				hide();								
+			public void handle(KeyEvent event) {				
+				hide();		
+				if(event.getCode() == KeyCode.ENTER) {
+					if( getSkin() instanceof BehaviorSkinBase<?, ?>) {
+			            ((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext();  
+			        }
+				}
 			}
 		});
 		this.addEventHandler(KeyEvent.KEY_RELEASED, this);	
@@ -33,8 +46,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 		    });
 	    this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 	        selectTextIfFocused();
-	    });
-		    
+	    });	    	   
 	}
 	
 	private void selectTextIfFocused(){
@@ -74,7 +86,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
                 || event.isControlDown() || event.getCode() == KeyCode.HOME
                 || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB || event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {
             return;
-        }
+        }       
 
         ObservableList<T> list = FXCollections.observableArrayList();
         if(data != null){

@@ -3,13 +3,13 @@ package org.javafx.controls.customs;
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class DatePickerField extends DatePicker {
+public class CheckBoxField extends CheckBox {
 	
-	public DatePickerField(){
+	public CheckBoxField(){
 		super();
 		initComponents();
 	}	

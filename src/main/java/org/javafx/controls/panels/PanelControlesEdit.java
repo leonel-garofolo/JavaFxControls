@@ -1,22 +1,19 @@
 package org.javafx.controls.panels;
 
-import java.io.IOException;
-
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class PanelControlesEdit extends Pane {
-	@FXML
+	private HBox hBox;
 	private Button btnGuardar;
-	@FXML
 	private Button btnCancelar;
 
 	public PanelControlesEdit() {
@@ -25,23 +22,24 @@ public class PanelControlesEdit extends Pane {
 	}
 
 	private void initialize() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-		fxmlLoader.setRoot(this);
-		fxmlLoader.setController(this);
-
-		try {
-			fxmlLoader.load();
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
-		}
+		this.hBox = new HBox(); 
+		this.btnGuardar = new Button();
+		this.btnCancelar = new Button();
+		
 		Image imageDecline = new Image(getClass().getResourceAsStream("/image/save.png"));
 		btnGuardar.setGraphic(new ImageView(imageDecline));
-
+		
 		imageDecline = new Image(getClass().getResourceAsStream("/image/cancel.png"));
 		btnCancelar.setGraphic(new ImageView(imageDecline));
+		
+		hBox.getChildren().addAll(btnGuardar, btnCancelar);
+		this.getChildren().add(hBox);
 	}
 
 	public void setScene(Scene scene) {
+		btnGuardar.setTooltip(new Tooltip("Guardar Elemento"));
+		btnCancelar.setTooltip(new Tooltip("Cancelar Elemento"));
+		
 		scene.getAccelerators().put(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN), new Runnable() {
 			@Override
 			public void run() {

@@ -1,15 +1,23 @@
 package org.javafx.controls.customs;
 
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 public class NumberField extends TextField {
 	private int maxValue = 9;
+	
+	public NumberField() {
+		super();
+		initComponents();
+	}
+	
 	//TODO crear parametro de numero de secuencia de foco
-	public NumberField() {		
+	@SuppressWarnings("restriction")
+	private void initComponents() {
 		textProperty().addListener(new ChangeListener<String>() {
 
             private boolean ignore;
@@ -25,7 +33,7 @@ public class NumberField extends TextField {
                 }
             }
         });
-		
+		/*
 		this.setOnAction((ActionEvent e) -> {
 		    boolean isThisField = false;
 		    for (Node child : getParent().getChildrenUnmodifiable()) {
@@ -56,8 +64,14 @@ public class NumberField extends TextField {
 		            }
 		        }
 		    }
-		});		    
-	}
+		});	
+		*/
+		this.setOnAction((ActionEvent e) -> {	
+			if( this.getSkin() instanceof BehaviorSkinBase<?, ?>) {
+	            ((BehaviorSkinBase<?, ?>) this.getSkin()).getBehavior().traverseNext();  
+	        }			
+		});	
+	}	
 	
 	@Override
 	public void replaceText(int start, int end, String text) {

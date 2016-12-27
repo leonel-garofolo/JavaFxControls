@@ -1,17 +1,28 @@
 package org.javafx.controls.customs;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 public class DecimalField extends TextField {	
 	private int maxValue = 11;
 	
 	public DecimalField(){
+		super();
+		initComponents();
+	}
+	
+	@SuppressWarnings("restriction")
+	private void initComponents() {
 		textProperty().addListener(new ChangeListener<String>() {
 
             private boolean ignore;
@@ -28,39 +39,13 @@ public class DecimalField extends TextField {
             }
         });
         
-        this.setOnAction((ActionEvent e) -> {
-		    boolean isThisField = false;
-		    for (Node child : getParent().getChildrenUnmodifiable()) {
-		        if (isThisField) {
-
-		            //This code will only execute after the current Node
-		            if (child.isFocusTraversable() && !child.isDisabled()) {
-		                child.requestFocus();
-
-		                //Reset check to prevent later Node from pulling focus
-		                isThisField = false;
-		            }
-		        } else {
-
-		            //Check if this is the current Node
-		            isThisField = child.equals(this);
-		        }
-		    }
-		  //Check if current Node still has focus
-		    boolean focusChanged = !this.isFocused();
-		    if (!focusChanged) {
-		        for (Node child : this.getParent().getChildrenUnmodifiable()) {
-		            if (!focusChanged && child.isFocusTraversable() && !child.isDisabled()) {
-		                child.requestFocus();
-
-		                //Update to prevent later Node from pulling focus
-		                focusChanged = true;
-		            }
-		        }
-		    }
-		});		    
-	}
-
+		this.setOnAction((ActionEvent e) -> {	
+			if( this.getSkin() instanceof BehaviorSkinBase<?, ?>) {
+	            ((BehaviorSkinBase<?, ?>) this.getSkin()).getBehavior().traverseNext();  
+	        }			
+		});		
+	}	
+	
 	@Override
 	public void replaceText(int start, int end, String text) {
 		if (text.matches("[0-9,.]*")) {
