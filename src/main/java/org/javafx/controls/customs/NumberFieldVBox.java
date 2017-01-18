@@ -56,15 +56,15 @@ public class NumberFieldVBox extends VBoxCustom{
 		this.field = field;
 	}
 	
-	public int getValue() {		
-		return Integer.valueOf(field.getText());
+	public Integer getValue() {		
+		return field.getValue();
 	}
 
 	public void setValue(int value) {
-		field.setText(String.valueOf(value));
+		field.setValue(value);
 	}
 	
 	public void setValue(String value) {		
-		field.setText(value);
+		field.setValue(value);
 	}
 }

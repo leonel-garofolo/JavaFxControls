@@ -52,8 +52,8 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 		this.field = field;
 	}
 	
-	public int getValue() {		
-		return Integer.valueOf(field.getText());
+	public String getValue() {		
+		return String.valueOf(field.getText());
 	}
 
 	public void setValue(int value) {

@@ -2,6 +2,8 @@ package org.javafx.controls.customs;
 
 
 
+import java.math.BigDecimal;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -63,15 +65,19 @@ public class DecimalFieldVBox extends VBox{
 		this.field = field;
 	}
 	
-	public int getValue() {		
-		return Integer.valueOf(field.getText());
+	public BigDecimal getValue() {		
+		return field.getValue();
 	}
 
 	public void setValue(int value) {
-		field.setText(String.valueOf(value));
+		field.setValue(String.valueOf(value));
 	}
 	
 	public void setValue(String value) {		
-		field.setText(value);
+		field.setValue(value);
+	}
+	
+	public void setValue(BigDecimal value) {		
+		field.setValue(value);
 	}
 }
