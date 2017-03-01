@@ -36,7 +36,7 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 	}
 
 	public String getText() {
-		return text;
+		return field.getText();
 	}
 
 	public void setText(String text) {

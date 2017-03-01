@@ -31,7 +31,7 @@ public class NumberFieldVBox extends VBoxCustom{
 	}
 
 	public String getText() {
-		return text;
+		return field.getText();
 	}
 
 	public void setText(String text) {

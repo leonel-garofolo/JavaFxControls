@@ -10,48 +10,60 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.StringConverter;
 
 public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler<KeyEvent> {
 	private String text;	
 	private ObservableList<T> data;
 	private boolean moveCaretToPos = false;
 	private int caretPos;
-
+	
 	public ComboBoxAutoComplete(){		        
         super();
         initComponents();
 	}
-	
-	@SuppressWarnings("restriction")
-	private void initComponents(){
-		this.setEditable(true);
-        this.focusedProperty().addListener((observable, oldValue, newValue) -> {        	
-        	this.getEditor().selectAll();
-        });
+		
+	private void initComponents(){		
+		setConverter(new StringConverter<T>() {
+		    @Override
+		    public String toString(T object) {
+		        if (object == null) return null;
+		        return object.toString();
+		    }
+
+			@Override
+			public T fromString(String value) {									
+				return getSelectionModel().getSelectedItem();
+			}		  
+		});
+		
+		data = FXCollections.observableArrayList();		
+		this.setEditable(true);      
         
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {				
-				hide();		
-				if(event.getCode() == KeyCode.ENTER) {
-					if( getSkin() instanceof BehaviorSkinBase<?, ?>) {
-			            ((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext();  
-			        }
-				}
+			public void handle(KeyEvent event) {
+				if(event.getCode() == KeyCode.ENTER){
+					
+					((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
+				}				
+				hide();								
 			}
-		});
+		});	
 		this.addEventHandler(KeyEvent.KEY_RELEASED, this);	
-		 this.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		
+		this.focusedProperty().addListener((observable, oldValue, newValue) -> {
 		        selectTextIfFocused();
 		    });
+		 /*
 	    this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 	        selectTextIfFocused();
-	    });	    	   
+	    });	*/	  
 	}
 	
 	private void selectTextIfFocused(){
 	    Platform.runLater(() -> {
 	        if ((this.getEditor().isFocused() || this.isFocused()) && !this.getEditor().getText().isEmpty()) {
-	            this.getEditor().selectAll();
+	            this.getEditor().selectAll();	            
 	        }
 	    });
 	}
@@ -83,9 +95,9 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 
         if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
                 || event.isControlDown() || event.getCode() == KeyCode.HOME
-                || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB || event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {
+                || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB || event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {        	
             return;
-        }       
+        }
 
         ObservableList<T> list = FXCollections.observableArrayList();
         if(data != null){
@@ -105,8 +117,11 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
             caretPos = -1;
         }
         moveCaret(t.length());
-        if(!list.isEmpty()) {
-            this.show();
+        if(!list.isEmpty()) {  
+        	this.hide();        	        	
+        	this.show();        	
+        }else{        	
+        	this.getSelectionModel().clearSelection();
         }
 		
 	}
