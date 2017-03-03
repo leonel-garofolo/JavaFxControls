@@ -21,8 +21,14 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	public ComboBoxAutoComplete(){		        
         super();
         initComponents();
-	}
+	}	
 		
+	public ComboBoxAutoComplete(ObservableList<T> data) {
+		 super(data);		
+	     initComponents();
+	     this.data = data;
+	}
+
 	private void initComponents(){		
 		setConverter(new StringConverter<T>() {
 		    @Override

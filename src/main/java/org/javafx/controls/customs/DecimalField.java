@@ -1,17 +1,13 @@
 package org.javafx.controls.customs;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
 public class DecimalField extends TextField {	
 	private int maxValue = 11;
@@ -79,9 +75,15 @@ public class DecimalField extends TextField {
 			}
 		}
 	}
+	
+	public void setValue(double value) {
+		this.setText(String.valueOf(value));
+	}
 
 	public void setValue(BigDecimal value) {
-		this.setText(value.toString());
+		if(value != null){
+			this.setText(value.toString());
+		}
 	}
 	
 	public void setValue(String value) {		

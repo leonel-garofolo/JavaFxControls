@@ -56,7 +56,9 @@ public class StringField extends TextField {
 		this.setText(String.valueOf(value));
 	}
 	
-	public void setValue(String value) {		
-		this.setText(value);
+	public void setValue(String value) {	
+		if(value != null){
+			this.setText(value);
+		}
 	}
 }

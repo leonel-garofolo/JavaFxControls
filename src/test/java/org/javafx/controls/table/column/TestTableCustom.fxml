@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import org.javafx.controls.table.column.*?>
+<?import javafx.scene.control.Button?>
+<?import org.javafx.controls.table.column.StringTableColumn?>
+<?import org.javafx.controls.table.TableViewEdit?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="org.javafx.controls.table.column.TestTableCustom">
+	
+	<TableViewEdit fx:id="tblPersona" editable="true" prefHeight="244.0" prefWidth="772.0">
+		<columns>
+			<NumberTableColumn editable="true" maxWidth="50" text="id">
+				<cellValueFactory>
+					<PropertyValueFactory property="id" />
+				</cellValueFactory>				
+			</NumberTableColumn>
+			<StringTableColumn editable="true" maxWidth="150" text="nombre">
+				<cellValueFactory>
+					<PropertyValueFactory property="nombre" />
+				</cellValueFactory>				
+			</StringTableColumn>
+			<StringTableColumn editable="true" maxWidth="150" text="apellido">
+				<cellValueFactory>
+					<PropertyValueFactory property="apellido" />
+				</cellValueFactory>				
+			</StringTableColumn>
+			<DateTableColumn editable="true" maxWidth="150" text="fechaNacimiento">
+				<cellValueFactory>
+					<PropertyValueFactory property="fechaNacimiento" />
+				</cellValueFactory>				
+			</DateTableColumn>
+			<ComboTableColumn fx:id="colTyp" editable="true" maxWidth="150" text="typ">
+				<cellValueFactory>
+					<PropertyValueFactory property="typ" />
+				</cellValueFactory>				
+			</ComboTableColumn>
+			<DecimalTableColumn editable="true" maxWidth="50" text="ahorro">
+				<cellValueFactory>
+					<PropertyValueFactory property="ahorro" />
+				</cellValueFactory>				
+			</DecimalTableColumn>			
+			<BooleanTableColumn fx:id="colCheck" editable="true" maxWidth="50" text="habilitado">
+				<cellValueFactory>
+					<PropertyValueFactory property="habilitado" />
+				</cellValueFactory>				
+			</BooleanTableColumn>			
+		</columns>
+		<columnResizePolicy>
+			<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+		</columnResizePolicy>
+	</TableViewEdit>
+	<Button text="Probar" onAction="#hanledTest" ></Button>
+</AnchorPane>
+
