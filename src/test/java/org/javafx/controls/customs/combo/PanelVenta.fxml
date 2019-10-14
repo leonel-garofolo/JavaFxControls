@@ -11,6 +11,7 @@
 <?import org.javafx.controls.customs.NumberField?>
 <?import org.javafx.controls.customs.DatePickerField?>
 <?import org.javafx.controls.customs.StringField?>
+<?import org.javafx.controls.customs.ComboBoxAutoFieldVBox?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
@@ -36,7 +37,7 @@
       						<StringField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
       						<Label text="Number" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       						<NumberField fx:id="txtNumber" maxValue="5" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      						<ComboBoxAutoComplete fx:id="cbxAgregarProducto" text="esto esta buenisimo..." GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      						<ComboBoxAutoFieldVBox fx:id="cbxAgregarProducto" prefWidth="200" onActionField="#testCombo" label="esto esta buenisimo..." GridPane.columnSpan="3" GridPane.columnIndex="0" GridPane.rowIndex="2" />
       					</children>                     			
       				</GridPane>                 
                </children>

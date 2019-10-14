@@ -1,6 +1,9 @@
 package org.javafx.controls.customs;
 
-public class NumberFieldVBox extends VBoxCustom{
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+public class NumberFieldVBox extends GridCustom{
 	public static char COMPONENT_HORIZONTAL='H';
 	public static char COMPONENT_VERTICAL='V';
 	
@@ -8,6 +11,7 @@ public class NumberFieldVBox extends VBoxCustom{
 	private String text = "";
 	private String promptText = "";
 	private NumberField field;
+	private char typePosition;
 	
 	public NumberFieldVBox() {
 		super();	
@@ -18,8 +22,9 @@ public class NumberFieldVBox extends VBoxCustom{
 		this.field = new NumberField();
 		field.setMaxValue(maxValue);
 		field.setText(text);
-		field.setPromptText(promptText);
-		getChildren().addAll(lbl,field);		
+		field.setPromptText(promptText);		
+		addRow(1, lbl);
+		addRow(2, field);
 	}
 
 	public int getMaxValue() {
@@ -66,5 +71,32 @@ public class NumberFieldVBox extends VBoxCustom{
 	
 	public void setValue(String value) {		
 		field.setValue(value);
+	}
+	
+	public void addAction(EventHandler<ActionEvent> event){		
+		this.field.addEventHandler(ActionEvent.ACTION, event);
+	}
+	
+	@Override
+	public void requestFocus() {
+		super.requestFocus();
+		this.field.requestFocus();
+	}
+	
+	public char getTypePosition() {
+		return typePosition;
+	}
+
+	public void setTypePosition(char typePosition) {
+		this.typePosition = typePosition;
+		getChildren().clear();
+		if(typePosition == 'H'){
+			addColumn(1, lbl);
+			addColumn(2, field);	
+		}
+		if(typePosition == 'V'){
+			addRow(1, lbl);
+			addRow(2, field);	
+		}
 	}
 }

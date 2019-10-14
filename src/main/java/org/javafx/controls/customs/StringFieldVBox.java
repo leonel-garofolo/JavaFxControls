@@ -3,9 +3,11 @@ package org.javafx.controls.customs;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
-public class StringFieldVBox extends VBoxCustom implements Initializable{
+public class StringFieldVBox extends GridCustom implements Initializable{
 	public static char COMPONENT_HORIZONTAL='H';
 	public static char COMPONENT_VERTICAL='V';
 	
@@ -13,6 +15,7 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 	private String text = "";
 	private String promptText = "";
 	private StringField field;
+	private char typePosition;
 	
 	public StringFieldVBox() {
 		super();	
@@ -24,7 +27,8 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 		field.setMaxValue(maxValue);
 		field.setText(text);
 		field.setPromptText(promptText);
-		getChildren().addAll(lbl,field);		
+		addRow(1, lbl);
+		addRow(2, field);		
 	}
 
 	public int getMaxValue() {
@@ -52,7 +56,10 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 		this.field = field;
 	}
 	
-	public String getValue() {		
+	public String getValue() {	
+		if(field.getText() != null && field.getText().equals("")){
+			return null;
+		}
 		return String.valueOf(field.getText());
 	}
 
@@ -67,7 +74,33 @@ public class StringFieldVBox extends VBoxCustom implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("asda");
-		field.setId(this.getId() + "Field");
-		
+		field.setId(this.getId() + "Field");		
 	}		
+	
+	public void addAction(EventHandler<ActionEvent> event){		
+		this.field.addEventHandler(ActionEvent.ACTION, event);
+	}
+	
+	@Override
+	public void requestFocus() {
+		super.requestFocus();
+		this.field.requestFocus();
+	}
+	
+	public char getTypePosition() {
+		return typePosition;
+	}
+
+	public void setTypePosition(char typePosition) {
+		this.typePosition = typePosition;
+		getChildren().clear();
+		if(typePosition == 'H'){
+			addColumn(1, lbl);
+			addColumn(2, field);	
+		}
+		if(typePosition == 'V'){
+			addRow(1, lbl);
+			addRow(2, field);	
+		}
+	}
 }

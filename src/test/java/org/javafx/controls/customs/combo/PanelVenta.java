@@ -2,7 +2,7 @@ package org.javafx.controls.customs.combo;
 
 import java.io.IOException;
 
-import org.javafx.controls.customs.ComboBoxAutoComplete;
+import org.javafx.controls.customs.ComboBoxAutoFieldVBox;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -33,7 +33,7 @@ public class PanelVenta extends BorderPane{
 			"Couve", "Espinafre", "Hortelã", "Mostarda", "Rúcula", "Salsa", "Ovos brancos", "Ovos de codorna",
 			"Ovos vermelhos" };
 	@FXML
-	private ComboBoxAutoComplete<String> cbxAgregarProducto;
+	private ComboBoxAutoFieldVBox<String> cbxAgregarProducto;
 	
 	public PanelVenta() {
 		initComponentes();				
@@ -49,7 +49,11 @@ public class PanelVenta extends BorderPane{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }        
-        cbxAgregarProducto.setItems(FXCollections.observableArrayList (LISTA));
-        cbxAgregarProducto.reload();
+        cbxAgregarProducto.setItems(FXCollections.observableArrayList (LISTA));        
 	}		
+	
+	@FXML
+	private void testCombo(){
+		System.out.println("Test");
+	}
 }

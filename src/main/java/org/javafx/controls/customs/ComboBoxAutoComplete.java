@@ -3,13 +3,15 @@ package org.javafx.controls.customs;
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler<KeyEvent> {
@@ -48,22 +50,30 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
         
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
-				if(event.getCode() == KeyCode.ENTER){
-					
+				if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.TAB){					
 					((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
 				}				
 				hide();								
 			}
-		});	
-		this.addEventHandler(KeyEvent.KEY_RELEASED, this);	
+		});			
+		
+		this.addEventHandler(KeyEvent.KEY_RELEASED, this);
+		this.setOnMousePressed(new EventHandler<MouseEvent>() {    //adding MouseEvent on ComboBox
+	        @Override
+	        public void handle(MouseEvent event) {
+	        	((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
+	        }
+
+	    });
 		
 		this.focusedProperty().addListener((observable, oldValue, newValue) -> {
 		        selectTextIfFocused();
 		    });
-		 /*
+		
 	    this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-	        selectTextIfFocused();
-	    });	*/	  
+	    	caretPos = -1;
+	    	moveCaret(this.getEditor().getText().length());
+	    });		  
 	}
 	
 	private void selectTextIfFocused(){
@@ -73,8 +83,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 	        }
 	    });
 	}
-	
-	@FXML
+		
 	public void reload(){
 		this.data = getItems();
 	}
@@ -92,11 +101,23 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
             moveCaret(this.getEditor().getText().length());
             return;
         } else if(event.getCode() == KeyCode.BACK_SPACE) {
-        	moveCaretToPos = true;
-            caretPos = this.getEditor().getCaretPosition();
+        	if(this.getEditor().getCaretPosition() > 0) {
+        		if(getSelectionModel() != null) {
+        			setValue(null);
+        		}else {
+        			moveCaretToPos = true;
+                    caretPos = this.getEditor().getCaretPosition();	
+        		}
+        	}
         } else if(event.getCode() == KeyCode.DELETE) {
-        	moveCaretToPos = true;
-            caretPos = this.getEditor().getCaretPosition();
+        	if(this.getEditor().getCaretPosition() > 0) {
+        		if(getSelectionModel() != null) {
+        			setValue(null);
+        		}else {
+        			moveCaretToPos = true;
+                    caretPos = this.getEditor().getCaretPosition();
+        		}
+        	}
         }
 
         if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
@@ -116,20 +137,25 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
         }
        
         String t = this.getEditor().getText();
-
-        this.setItems(list);
-        this.getEditor().setText(t);
-        if(!moveCaretToPos) {
-            caretPos = -1;
+        if(t != null && !t.equals("")){
+        	 this.setItems(list);
+        	 //this.reload();
+             this.getEditor().setText(t);
+             if(!moveCaretToPos) {
+                 caretPos = -1;
+             }
+             moveCaret(t.length());
+             if(!list.isEmpty()) {  
+             	if(!this.isShowing()){
+             		this.show();
+             		return;
+             	}        	
+             }else{        	
+             	this.getSelectionModel().clearSelection();
+             }
+        }else{
+        	this.setItems(null);
         }
-        moveCaret(t.length());
-        if(!list.isEmpty()) {  
-        	this.hide();        	        	
-        	this.show();        	
-        }else{        	
-        	this.getSelectionModel().clearSelection();
-        }
-		
 	}
 	
 	private void moveCaret(int textLength) {

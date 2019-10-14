@@ -27,9 +27,8 @@ public class WebViewPdf extends Region  {
     
 	public WebViewPdf() {
 		this.engine.setJavaScriptEnabled(true);
-		this.url = getClass().getResource("/web/viewer.html").getPath();
-        
-		this.engine.setJavaScriptEnabled(true);
+		this.url = getClass().getResource("/web/viewer.html").toExternalForm();
+		System.out.println(url);
 		this.engine.load(url);
 
 		this.engine.getLoadWorker()
@@ -78,7 +77,9 @@ public class WebViewPdf extends Region  {
     
     public void open(String path){  
     	this.realPath= path;
-    	this.engine.load("file:///" + url + "?file=" + path);          	
+    	System.out.println(url + "?file=//localhost/" + path);
+    	//this.engine.load(url + "?file=//localhost/" + path);     
+    	this.engine.load(url + "?file=//localhost/" + path);
     }
     
     public class JSLogListener {

@@ -1,5 +1,7 @@
 package org.javafx.controls.customs;
 
+import java.time.LocalDate;
+
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.event.EventHandler;
@@ -22,6 +24,7 @@ public class DatePickerField extends DatePicker {
 					if( getSkin() instanceof BehaviorSkinBase<?, ?>) {
 			            ((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext();  
 			        }
+					setValue(LocalDate.now());
 				}
 			}
 		});

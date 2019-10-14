@@ -65,14 +65,14 @@ public class DecimalField extends TextField {
 	}
 
 	public BigDecimal getValue() {
-		if(this.getText().equals("")){
+		if(this.getText() != null && this.getText().equals("")){
+			return null;			
+		}
+		
+		try{
+			return new BigDecimal(this.getText());
+		}catch (Exception e) {
 			return null;
-		}else{
-			try{
-				return new BigDecimal(this.getText());
-			}catch (Exception e) {
-				return null;
-			}
 		}
 	}
 	
