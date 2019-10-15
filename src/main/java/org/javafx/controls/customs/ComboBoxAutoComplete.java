@@ -104,6 +104,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
         	if(this.getEditor().getCaretPosition() > 0) {
         		if(getSelectionModel() != null) {
         			setValue(null);
+        			return;
         		}else {
         			moveCaretToPos = true;
                     caretPos = this.getEditor().getCaretPosition();	
@@ -113,6 +114,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
         	if(this.getEditor().getCaretPosition() > 0) {
         		if(getSelectionModel() != null) {
         			setValue(null);
+        			return;
         		}else {
         			moveCaretToPos = true;
                     caretPos = this.getEditor().getCaretPosition();
