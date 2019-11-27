@@ -175,5 +175,5 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 
 	public void setText(String text) {
 		this.text = text;		
-	}
+	}	
 }

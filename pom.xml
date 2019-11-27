@@ -24,12 +24,7 @@
 		</plugins>
 	</build>
 	
-	<dependencies>	
-		<dependency>
-			<groupId>com.lg.utilities</groupId>
-			<artifactId>utilities</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>	
+	<dependencies>		
 		<dependency>
 		    <groupId>org.controlsfx</groupId>
 		    <artifactId>controlsfx</artifactId>
