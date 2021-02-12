@@ -1,6 +1,5 @@
 package org.javafx.controls.customs;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -51,7 +50,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
 				if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.TAB){					
-					((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
+					
 				}				
 				hide();								
 			}
@@ -61,7 +60,7 @@ public class ComboBoxAutoComplete<T> extends ComboBox<T> implements EventHandler
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {    //adding MouseEvent on ComboBox
 	        @Override
 	        public void handle(MouseEvent event) {
-	        	((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
+	        	
 	        }
 
 	    });

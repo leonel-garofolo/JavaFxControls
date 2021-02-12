@@ -1,7 +1,5 @@
 package org.javafx.controls.customs;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.KeyCode;
@@ -19,9 +17,7 @@ public class CheckBoxField extends CheckBox {
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {				
 				if(event.getCode() == KeyCode.ENTER) {
-					if( getSkin() instanceof BehaviorSkinBase<?, ?>) {
-			            ((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext();  
-			        }
+					
 				}
 			}
 		});

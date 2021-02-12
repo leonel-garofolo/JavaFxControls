@@ -1,6 +1,5 @@
 package org.javafx.controls.customs;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Spinner;
@@ -16,9 +15,6 @@ private int maxValue = 9;
 	@SuppressWarnings({ "restriction" })
 	private void initComponents() {	
 		getEditor().setOnAction((ActionEvent e) -> {	
-			if( this.getSkin() instanceof BehaviorSkinBase<?, ?>) {
-	            ((BehaviorSkinBase<?, ?>) this.getSkin()).getBehavior().traverseNext();  
-	        }			
 		});		
 	}	
 }

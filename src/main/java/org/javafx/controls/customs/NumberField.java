@@ -1,7 +1,5 @@
 package org.javafx.controls.customs;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -67,9 +65,6 @@ public class NumberField extends TextField {
 		});	
 		*/
 		this.setOnAction((ActionEvent e) -> {	
-			if( this.getSkin() instanceof BehaviorSkinBase<?, ?>) {
-	            ((BehaviorSkinBase<?, ?>) this.getSkin()).getBehavior().traverseNext();  
-	        }			
 		});	
 	}	
 	

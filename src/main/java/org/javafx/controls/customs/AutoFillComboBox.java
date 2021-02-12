@@ -10,8 +10,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 
 /**
  * ComboBox with autofill feature.
@@ -60,9 +58,6 @@ public class AutoFillComboBox<T> extends ComboBox<T> {
                 if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN) {
                     event.consume();
                 }
-                if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.TAB){					
-					((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext(); 
-				}
             }
         });                
 
@@ -94,8 +89,7 @@ public class AutoFillComboBox<T> extends ComboBox<T> {
             public void handle(Event event) {
                 // Work around; need to check for proper solution.
                 final int selectedIndex = getSelectionModel().getSelectedIndex();
-                final ComboBoxListViewSkin<?> skin = (ComboBoxListViewSkin<?>) getSkin();
-                skin.getListView().scrollTo(selectedIndex < 0 ? 0 : selectedIndex);
+               
 
             }
         });             

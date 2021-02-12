@@ -2,8 +2,6 @@ package org.javafx.controls.customs;
 
 import java.time.LocalDate;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-
 import javafx.event.EventHandler;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.KeyCode;
@@ -20,10 +18,7 @@ public class DatePickerField extends DatePicker {
 	private void initComponents() {		     
 		this.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {				
-				if(event.getCode() == KeyCode.ENTER) {
-					if( getSkin() instanceof BehaviorSkinBase<?, ?>) {
-			            ((BehaviorSkinBase<?, ?>) getSkin()).getBehavior().traverseNext();  
-			        }
+				if(event.getCode() == KeyCode.ENTER) {					
 					setValue(LocalDate.now());
 				}
 			}
