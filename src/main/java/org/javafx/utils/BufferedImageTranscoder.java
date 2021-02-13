@@ -1,4 +1,5 @@
 package org.javafx.utils;
+
 import java.awt.image.BufferedImage;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderOutput;
