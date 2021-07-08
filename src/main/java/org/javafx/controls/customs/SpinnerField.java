@@ -2,6 +2,9 @@ package org.javafx.controls.customs;
 
 import java.util.List;
 
+import org.javafx.controls.customs.GridCustom;
+import org.javafx.controls.customs.SpinnerControl;
+
 import javafx.collections.FXCollections;
 import javafx.scene.control.SpinnerValueFactory;
 

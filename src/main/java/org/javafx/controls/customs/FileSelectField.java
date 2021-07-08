@@ -5,13 +5,13 @@ import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.stage.DirectoryChooser;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
-public class DirectorySelectFieldVBox extends GridCustom implements EventHandler<ActionEvent>{
+public class FileSelectField extends VBox implements EventHandler<ActionEvent>{
 	public static char COMPONENT_HORIZONTAL='H';
 	public static char COMPONENT_VERTICAL='V';
 	
@@ -22,30 +22,28 @@ public class DirectorySelectFieldVBox extends GridCustom implements EventHandler
 	private Button button;
 	private char typePosition;
 	
-	public DirectorySelectFieldVBox() {
+	public FileSelectField() {
 		super();	
 		initComponents();
 	}
 	
 	private void initComponents() {				
 		this.field = new StringField();
-		this.button = new Button("a");
+		this.button = new Button();
 		button.setOnAction(this);
 		Image img = new Image("image/edit.png");
 		ImageView view = new ImageView(img);
-		view.setFitHeight(80);
-		view.setPreserveRatio(true);			      
-		setMaxValue(maxValue);
-		field.setPrefWidth(50);
+		view.setPreserveRatio(true);
+		button.setGraphic(view);
+				
+		field.setPrefWidth(400);
 		field.setText(text);
 		field.setPromptText(promptText);
 		field.setDisable(true);
 		
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(field, button);
-		addRow(1, lbl);
-		addRow(2, hBox);
-		addRow(3, new Label("asdds"));
+		getChildren().add(hBox);
 	}	
 
 	public void setMaxValue(int maxValue) {
@@ -88,30 +86,24 @@ public class DirectorySelectFieldVBox extends GridCustom implements EventHandler
 
 	@Override
 	public void handle(ActionEvent event) {
-		DirectoryChooser chooser = new DirectoryChooser();
+		FileChooser chooser = new FileChooser();
 		if(!field.getText().equals("")) {
-			chooser.setInitialDirectory(new File(field.getText()));	
-		}			
-		File file =chooser.showDialog(null);
+			File dZip = new File(field.getText());
+			chooser.setInitialDirectory(dZip.getParentFile());	
+		}
+		File file =chooser.showOpenDialog(null);
 		if(file != null){
 			field.setText(file.getPath());
-		}		
+		}
+	}
+	
+	@Override
+	public void requestFocus() {
+		super.requestFocus();
+		this.field.requestFocus();
 	}
 	
 	public char getTypePosition() {
 		return typePosition;
-	}
-
-	public void setTypePosition(char typePosition) {
-		this.typePosition = typePosition;
-		getChildren().clear();
-		if(typePosition == 'H'){
-			addColumn(1, lbl);
-			addColumn(2, field);	
-		}
-		if(typePosition == 'V'){
-			addRow(1, lbl);
-			addRow(2, field);	
-		}
 	}
 }

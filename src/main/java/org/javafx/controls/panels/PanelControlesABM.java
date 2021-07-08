@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-public class PanelControlesABM extends Pane {
+public class PanelControlesABM extends Pane {	
 	private HBox hBox;
 	private Button btnAgregar;
 	private Button btnEditar;

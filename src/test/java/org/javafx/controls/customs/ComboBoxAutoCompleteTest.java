@@ -1,5 +1,7 @@
 package org.javafx.controls.customs;
 
+import org.javafx.controls.customs.field.ComboBoxAutoCompleteField;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;

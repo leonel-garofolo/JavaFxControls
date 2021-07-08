@@ -44,8 +44,8 @@ public class StringField extends TextField {
 		this.maxValue = maxValue;
 	}
 	
-	public int getValue() {		
-		return Integer.valueOf(this.getText());
+	public String getValue() {		
+		return this.getText();
 	}
 
 	public void setValue(int value) {
