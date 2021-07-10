@@ -1,11 +1,6 @@
 package org.javafx.controls.customs;
 
-import org.javafx.controls.customs.field.ComboBoxAutoCompleteField;
-
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -40,6 +35,7 @@ public class ComboBoxAutoCompleteTest extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		VBox vertical = new VBox();		
+		/*
 		ComboBoxAutoComplete<String> combo3 = new ComboBoxAutoComplete<String>();
 		combo3.setItems(FXCollections.observableArrayList (LISTA));
 		combo3.reload();
@@ -50,6 +46,7 @@ public class ComboBoxAutoCompleteTest extends Application {
 		stage.setTitle("Filtrando um ComboBox");
 		stage.setWidth(300);
 		stage.setHeight(300);
+		*/
 	}
 
 }

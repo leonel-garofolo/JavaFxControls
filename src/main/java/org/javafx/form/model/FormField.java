@@ -1,12 +1,16 @@
 package org.javafx.form.model;
 
 public class FormField {
-	private String id;
-	private String label;
-	private FormFieldType type ;
-	private Object value;
-	private boolean required;
-	private String hint;
+	protected String id;
+	protected String label;
+	protected FormFieldType type ;
+	protected Object value;
+	protected boolean required;
+	protected String hint;
+	
+	public FormField() {
+		super();
+	}
 	
 	public FormField(FormFieldType type) {
 		super();

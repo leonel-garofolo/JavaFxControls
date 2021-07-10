@@ -1,5 +1,7 @@
 package org.javafx.controls.customs.view;
 
+import java.util.List;
+
 import org.javafx.controls.customs.ComboBoxAutoComplete;
 
 import javafx.collections.ObservableList;
@@ -35,5 +37,18 @@ public class ComboBoxAutoCompleteView<T> extends VBox{
 	public void addItem(T item) {
 		field.getItems().add(item);
 		field.reload();		
+	}
+	
+	public void addAllItem(List<T> items) {
+		field.getItems().addAll(items);
+		field.reload();		
+	}
+	
+	public void setValue(T value) {
+		this.field.setValue(value);
+	}
+	
+	public T getValue() {
+		return this.field.getValue();		
 	}
 }

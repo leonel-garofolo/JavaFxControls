@@ -7,7 +7,9 @@ import org.javafx.controls.customs.DirectorySelectField;
 import org.javafx.controls.customs.FileSelectField;
 import org.javafx.controls.customs.NumberField;
 import org.javafx.controls.customs.StringField;
+import org.javafx.controls.customs.view.ComboBoxAutoCompleteView;
 import org.javafx.form.model.FormField;
+import org.javafx.form.model.FormFieldList;
 import org.javafx.style.TextStyle;
 
 import javafx.collections.ObservableList;
@@ -15,7 +17,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -60,6 +61,7 @@ public class FormBuilder extends ScrollPane {
 		fitToWidthProperty().set(true);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public Object getValue(String id) {
 		FormField ff = null;
 		for(FormField formField: fields) {
@@ -76,24 +78,10 @@ public class FormBuilder extends ScrollPane {
 			for (Node node : nodos) {
 				if(node instanceof VBox) {
 					final ObservableList<Node> vBoxChildren = ((VBox) node).getChildren();
-					for(Node vBoxNode: vBoxChildren) {
-						if(vBoxNode.getId() != null && vBoxNode.getId().equals(id)) {
-							switch (ff.getType()) {
-							case STRING:
-								return ((StringField)vBoxNode).getValue();
-							case NUMBER:
-								return ((NumberField)vBoxNode).getValue();
-							case BOOLEAN:
-								return ((CheckBoxField)vBoxNode).isSelected();
-							case DIRECTORY:
-								return ((DirectorySelectField)vBoxNode).getValue();
-							case FILE:
-								return ((FileSelectField)vBoxNode).getValue();
-							default:
-								break;
-							}
-						}
-					}
+					Object value = findValue(vBoxChildren, ff, id);
+					if(value == null)
+						continue;
+					return value;
 				}	
 				
 				if(node instanceof HBox) {
@@ -108,6 +96,32 @@ public class FormBuilder extends ScrollPane {
 							}
 						}
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private Object findValue(ObservableList<Node> vBoxChildren, FormField ff, String id) {
+		for(Node vBoxNode: vBoxChildren) {
+			if(vBoxNode.getId() != null && vBoxNode.getId().equals(id)) {
+				switch (ff.getType()) {
+				case STRING:
+					return ((StringField)vBoxNode).getValue();
+				case NUMBER:
+					return ((NumberField)vBoxNode).getValue();
+				case BOOLEAN:
+					return ((CheckBoxField)vBoxNode).isSelected();
+				case LIST:
+					return ((ComboBoxAutoCompleteView)vBoxNode).getValue();
+				case DIRECTORY:
+					return ((DirectorySelectField)vBoxNode).getValue();
+				case FILE:
+					return ((FileSelectField)vBoxNode).getValue();
+				default:
+					findValue(((VBox) vBoxNode).getChildren(), ff, id);
+					break;
 				}
 			}
 		}
@@ -224,7 +238,12 @@ public class FormBuilder extends ScrollPane {
 			vBox.getChildren().add(numberField);
 			break;				
 		case LIST:
-			ComboBox field = new ComboBox();
+			final ComboBoxAutoCompleteView<Object> listField = new ComboBoxAutoCompleteView<Object>(formField.getLabel());			
+			listField.addAllItem(((FormFieldList)formField).getList());
+			listField.setId(formField.getId());
+			if(formField.getValue() != null)
+				listField.setValue(formField.getValue());
+			vBox.getChildren().add(listField);
 			break;
 		case DIRECTORY:
 			vBox.getChildren().add(buildLabel(formField));
