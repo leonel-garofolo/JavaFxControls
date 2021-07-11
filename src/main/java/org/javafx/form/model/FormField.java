@@ -1,5 +1,8 @@
 package org.javafx.form.model;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 public class FormField {
 	protected String id;
 	protected String label;
@@ -7,6 +10,8 @@ public class FormField {
 	protected Object value;
 	protected boolean required;
 	protected String hint;
+	protected EventHandler<ActionEvent> action;
+
 	
 	public FormField() {
 		super();
@@ -103,6 +108,13 @@ public class FormField {
 
 	public void setHint(String hint) {
 		this.hint = hint;
-	}	
-	
+	}
+
+	public void setAction(EventHandler<ActionEvent> action) {
+		this.action = action;
+	}
+
+	public EventHandler<ActionEvent> getAction() {
+		return this.action;
+	}
 }

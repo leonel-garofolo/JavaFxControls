@@ -250,6 +250,8 @@ public class FormBuilder extends ScrollPane {
 			final DirectorySelectField directorySelectFieldVBox = new DirectorySelectField();
 			directorySelectFieldVBox.setId(formField.getId());
 			directorySelectFieldVBox.setPrefWidth(300);
+			if(formField.getValue() != null)
+				directorySelectFieldVBox.setValue(formField.getValue().toString());
 			vBox.getChildren().add(directorySelectFieldVBox);
 			break;
 		case FILE:
@@ -257,12 +259,15 @@ public class FormBuilder extends ScrollPane {
 			final FileSelectField fileSelectField = new FileSelectField();
 			fileSelectField.setId(formField.getId());
 			fileSelectField.setPrefWidth(300);
+			if(formField.getValue() != null)
+				fileSelectField.setValue(formField.getValue().toString());
 			vBox.getChildren().add(fileSelectField);
 			break;			
 		case BUTTON:
 			vBox.getChildren().add(new Label(""));
 			final Button btn = new Button(formField.getLabel());
 			btn.setPrefWidth(100);
+			btn.setOnAction(formField.getAction());
 			vBox.getChildren().add(btn);
 			break;
 		default:
