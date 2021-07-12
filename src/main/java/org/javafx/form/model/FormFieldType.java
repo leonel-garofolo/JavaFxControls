@@ -6,6 +6,7 @@ public enum FormFieldType {
 	SUBTITLE3,
 	STRING,
 	NUMBER,
+	PASSWORD,
 	BOOLEAN,
 	BUTTON,
 	NEW_ROW,

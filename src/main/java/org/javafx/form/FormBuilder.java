@@ -2,6 +2,7 @@ package org.javafx.form;
 
 import java.util.List;
 
+import javafx.scene.control.*;
 import org.javafx.controls.customs.CheckBoxField;
 import org.javafx.controls.customs.DirectorySelectField;
 import org.javafx.controls.customs.FileSelectField;
@@ -16,10 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -101,6 +98,22 @@ public class FormBuilder extends ScrollPane {
 		}
 		return null;
 	}
+
+	public FormField getField(String id){
+		for(FormField formField: fields) {
+			if(formField.getId() == null)
+				continue;
+
+			if(formField.getId().equals(id)) {
+				return formField;
+			}
+		}
+		return null;
+	}
+
+	public List<FormField> getFields(){
+		return fields;
+	}
 	
 	@SuppressWarnings("rawtypes")
 	private Object findValue(ObservableList<Node> vBoxChildren, FormField ff, String id) {
@@ -111,6 +124,8 @@ public class FormBuilder extends ScrollPane {
 					return ((StringField)vBoxNode).getValue();
 				case NUMBER:
 					return ((NumberField)vBoxNode).getValue();
+				case PASSWORD:
+					return ((PasswordField)vBoxNode).getText();
 				case BOOLEAN:
 					return ((CheckBoxField)vBoxNode).isSelected();
 				case LIST:
@@ -233,10 +248,22 @@ public class FormBuilder extends ScrollPane {
 			vBox.getChildren().add(buildLabel(formField));
 			final NumberField numberField= new NumberField();
 			numberField.setId(formField.getId());
-			if(formField.getValue()!= null)
-				numberField.setValue(Integer.valueOf(formField.getValue().toString()));
+			if(formField.getValue()!= null) {
+				try {
+					numberField.setValue(Integer.valueOf(formField.getValue().toString()));
+				}catch (NumberFormatException e){
+				}
+			}
 			vBox.getChildren().add(numberField);
-			break;				
+			break;
+		case PASSWORD:
+			vBox.getChildren().add(buildLabel(formField));
+			final PasswordField passwordField= new PasswordField();
+			passwordField.setId(formField.getId());
+			if(formField.getValue()!= null)
+				passwordField.setText(formField.getValue().toString());
+			vBox.getChildren().add(passwordField);
+			break;
 		case LIST:
 			final ComboBoxAutoCompleteView<Object> listField = new ComboBoxAutoCompleteView<Object>(formField.getLabel());			
 			listField.addAllItem(((FormFieldList)formField).getList());
@@ -305,5 +332,9 @@ public class FormBuilder extends ScrollPane {
 		}
 		hBox.getChildren().add(node);
 		return hBox;
+	}
+
+	public void refresh() {
+		build();
 	}
 }
