@@ -10,6 +10,8 @@ public class FormField {
 	protected Object value;
 	protected boolean required;
 	protected String hint;
+	protected boolean visible;
+	protected boolean enabled;
 	protected EventHandler<ActionEvent> action;
 
 	
@@ -26,6 +28,8 @@ public class FormField {
 		super();
 		this.label = label;
 		this.type = type;
+		this.visible = true;
+		this.enabled = true;
 	}
 	
 	public FormField(String id, String label, Object value) {
@@ -33,6 +37,8 @@ public class FormField {
 		this.id = id;
 		this.label = label;		
 		this.value = value;
+		this.visible = true;
+		this.enabled = true;
 	}	
 	
 	public FormField(String id, String label, Object value, boolean isRequired, String hint) {
@@ -42,9 +48,7 @@ public class FormField {
 	}
 	
 	public FormField(String id, String label, FormFieldType type, Object value) {
-		super();
-		this.id = id;
-		this.label = label;		
+		this(id, label, value);
 		this.type = type;
 		this.value = value;
 	}		
@@ -112,6 +116,22 @@ public class FormField {
 
 	public void setAction(EventHandler<ActionEvent> action) {
 		this.action = action;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public EventHandler<ActionEvent> getAction() {

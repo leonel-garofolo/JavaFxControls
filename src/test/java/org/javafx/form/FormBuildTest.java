@@ -27,10 +27,17 @@ public class FormBuildTest extends Application {
 		fields.add(new FormField("field3","Field 3", FormFieldType.BOOLEAN, true));
 		fields.add(new FormField("field4", "Field 4", FormFieldType.STRING, null));
 		fields.add(new FormField("field5", "Subtittle ", FormFieldType.SUBTITLE1, null));
-		fields.add(new FormField("field6", "Field 5", FormFieldType.BOOLEAN, true));
-		fields.add(new FormField("field7", "Field 6", FormFieldType.STRING, null));
-		fields.add(new FormField("field8", "Field 7", FormFieldType.STRING, null));
-		
+		fields.add(new FormField("field6", "Field 6", FormFieldType.BOOLEAN, true));
+		fields.add(new FormField("field7", "Field 7", FormFieldType.STRING, null));
+		fields.add(new FormField("field8", "Field 8", FormFieldType.STRING, null));
+
+		FormField fieldInvisible = new FormField("field9", "Field 9", FormFieldType.STRING, null);
+		fieldInvisible.setVisible(false);
+		fields.add(fieldInvisible);
+
+		FormField fieldEnabled = new FormField("field10", "Field 10", FormFieldType.STRING, null);
+		fieldEnabled.setEnabled(false);
+		fields.add(fieldEnabled);
 		
 		
 		final FormBuilder formBuilder = new FormBuilder("Mi Title", fields );

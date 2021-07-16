@@ -7,10 +7,7 @@ public class FormFieldList extends FormField{
 	private List<Object> list;
 	
 	public FormFieldList(String id, String label, List<Object> list, Object value) {
-		super();
-		this.id = id;
-		this.label = label;		
-		this.value = value;
+		super(id, label, value);
 		this.type = FormFieldType.LIST;
 		this.list = list;
 	}

@@ -99,6 +99,45 @@ public class FormBuilder extends ScrollPane {
 		return null;
 	}
 
+	public void setValue(String id, Object value) {
+		FormField ff = null;
+		for(FormField formField: fields) {
+			if(formField.getId() == null)
+				continue;
+
+			if(formField.getId().equals(id)) {
+				ff= formField;
+				break;
+			}
+		}
+		if(ff != null) {
+			ff.setValue(value);
+			ObservableList<Node> nodos = this.gridPane.getChildren();
+			for (Node node : nodos) {
+				if(node instanceof VBox) {
+					final ObservableList<Node> vBoxChildren = ((VBox) node).getChildren();
+					boolean isSet = setValue(vBoxChildren, ff, id, value);
+					if(!isSet)
+						continue;
+				}
+
+				if(node instanceof HBox) {
+					final ObservableList<Node> vBoxChildren = ((HBox) node).getChildren();
+					for(Node vBoxNode: vBoxChildren) {
+						if(vBoxNode.getId() != null && vBoxNode.getId().equals(id)) {
+							switch (ff.getType()) {
+								case BOOLEAN:
+									((CheckBoxField)vBoxNode).setSelected((Boolean) value);
+								default:
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public FormField getField(String id){
 		for(FormField formField: fields) {
 			if(formField.getId() == null)
@@ -141,6 +180,40 @@ public class FormBuilder extends ScrollPane {
 			}
 		}
 		return null;
+	}
+
+	private boolean setValue(ObservableList<Node> vBoxChildren, FormField ff, String id, Object value) {
+		for(Node vBoxNode: vBoxChildren) {
+			if(vBoxNode.getId() != null && vBoxNode.getId().equals(id)) {
+				switch (ff.getType()) {
+					case STRING:
+						((StringField)vBoxNode).setValue((String) value);
+						return true;
+					case NUMBER:
+						((NumberField)vBoxNode).setValue((Integer) value);
+						return true;
+					case PASSWORD:
+						((PasswordField)vBoxNode).setText((String) value);
+						return true;
+					case BOOLEAN:
+						((CheckBoxField)vBoxNode).setSelected((Boolean) value);
+						return true;
+					case LIST:
+						((ComboBoxAutoCompleteView)vBoxNode).setValue(value);
+						return true;
+					case DIRECTORY:
+						((DirectorySelectField)vBoxNode).setValue((String) value);
+						return true;
+					case FILE:
+						((FileSelectField)vBoxNode).setValue((String) value);
+						return true;
+					default:
+						findValue(((VBox) vBoxNode).getChildren(), ff, id);
+						break;
+				}
+			}
+		}
+		return false;
 	}
 		
 	public FormBuilder build() {		
@@ -233,7 +306,9 @@ public class FormBuilder extends ScrollPane {
 	
 	
 	private VBox buildFieldVertical(FormField formField) {		
-		VBox vBox = new VBox();				
+		VBox vBox = new VBox();
+		vBox.setVisible(formField.isVisible());
+		vBox.setDisable(!formField.isEnabled());
 		switch (formField.getType()) {
 		case STRING:
 			vBox.getChildren().add(buildLabel(formField));

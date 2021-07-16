@@ -263,4 +263,12 @@ public class JavaFxUtilities {
       
 		return img;
 	}
+
+	public static ImageView getImagePNG(String fileName){
+		Image img = new Image("images/" + fileName +".png");
+		ImageView view = new ImageView(img);
+		view.setPickOnBounds(true);
+		view.setPreserveRatio(true);
+		return view;
+	}
 }
