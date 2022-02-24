@@ -1,11 +1,5 @@
 package org.javafx.controls.customs;
 
-import java.lang.reflect.ParameterizedType;
-
-import org.javafx.utils.JavaFxUtilities;
-
-import com.lg.utilities.Explorer;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
+import org.javafx.utils.JavaFxUtilities;
 
 public class ExplorerControl<T> extends GridCustom{
 	private String promptText = "Buscar...";

@@ -10,17 +10,19 @@
 	<properties>
 		<compileSource>1.8</compileSource>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk>C:\Program Files\Java\jdk1.8.0_291\bin\javac.exe</jdk>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${compileSource}</source>
 					<target>${compileSource}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<fork>true</fork>
-					<executable>C:\Program Files\Java\jdk1.8.0_291\bin\javac.exe</executable>
+					<executable>${jdk}</executable>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -32,13 +34,7 @@
 		    <groupId>org.openjfx</groupId>
 		    <artifactId>javafx-controls</artifactId>
 		    <version>11.0.2</version>
-		</dependency>	
-		<!-- utilities -->
-		<dependency>
-		    <groupId>com.lg.utilities</groupId>
-		    <artifactId>utilities</artifactId>
-		    <version>0.0.1</version>	    		    
-		</dependency>	
+		</dependency>
 						
 		<dependency>
 			<groupId>org.controlsfx</groupId>
@@ -49,6 +45,20 @@
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
 			<version>1.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-io</artifactId>
+					<groupId>commons-io</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
